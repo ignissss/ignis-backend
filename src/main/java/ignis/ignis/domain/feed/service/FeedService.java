@@ -5,6 +5,8 @@ import ignis.ignis.domain.feed.controller.dto.request.XYRequest;
 import ignis.ignis.domain.feed.controller.dto.response.CountResponse;
 import ignis.ignis.domain.feed.controller.dto.response.FindAllFeedResponse;
 import ignis.ignis.domain.feed.controller.dto.response.FindFeedResponse;
+import ignis.ignis.domain.feed.domain.Count;
+import ignis.ignis.domain.feed.domain.CountRepository;
 import ignis.ignis.domain.feed.domain.Feed;
 import ignis.ignis.domain.feed.domain.repository.FeedRepository;
 import ignis.ignis.domain.user.domain.User;
@@ -26,6 +28,7 @@ public class FeedService {
     private final FeedRepository feedRepository;
     private final UserFacade userFacade;
     private final S3Service s3Service;
+    private final CountRepository countRepository;
 
     @Transactional
     public void createFeed(String title, List<MultipartFile> image, XYRequest request) {
@@ -65,20 +68,30 @@ public class FeedService {
 
     @Transactional
     public CountResponse addCount(Long feedId) {
+        User user = userFacade.getCurrentUser();
         Feed feed = feedRepository.findById(feedId).orElseThrow(()->new NotFoundException("adsf"));
-        if (feedRepository.existsByUserAndFeed(userFacade.getCurrentUser(), feed)) {
-            throw new RuntimeException("asdf");
+        if(countRepository.existsByUserAndFeed(user, feed)) {
+            throw new RuntimeException(("adsf"));
         }
+        countRepository.save(
+                Count.builder()
+                        .user(user)
+                        .feed(feed)
+                        .build());
+
         feed.addCount();
         return new CountResponse(feed.getCount());
     }
 
     @Transactional
     public CountResponse deleteCount(Long feedId) {
+        User user = userFacade.getCurrentUser();
         Feed feed = feedRepository.findById(feedId).orElseThrow(()->new NotFoundException("adsf"));
-        if (!feedRepository.existsByUserAndFeed(userFacade.getCurrentUser(), feed)) {
-            throw new RuntimeException("asdf");
+        if (countRepository.existsByUserAndFeed(user, feed)) {
+            throw new RuntimeException("adsf");
         }
+        countRepository.deleteByUserAndFeed(user, feed);
+
         feed.deleteCount();
         return new CountResponse(feed.getCount());
     }
