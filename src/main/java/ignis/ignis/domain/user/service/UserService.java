@@ -1,8 +1,10 @@
 package ignis.ignis.domain.user.service;
 
 import ignis.ignis.domain.user.controller.dto.request.LoginRequest;
+import ignis.ignis.domain.user.controller.dto.request.SignupRequest;
 import ignis.ignis.domain.user.domain.User;
 import ignis.ignis.domain.user.domain.repository.UserRepository;
+import ignis.ignis.domain.user.facade.UserFacade;
 import ignis.ignis.global.security.jwt.JwtTokenProvider;
 import ignis.ignis.global.security.jwt.dto.TokenResponse;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
+    private final UserFacade userFacade;
 
     @Transactional
     public TokenResponse login(LoginRequest request) {
@@ -29,5 +32,15 @@ public class UserService {
         }
 
         return jwtTokenProvider.getToken(request.getUserName());
+    }
+
+    @Transactional
+    public void signup(SignupRequest request) {
+        User user = userFacade.getCurrentUser();
+
+        if (user.getAge() != null) throw new RuntimeException();
+
+        user.signup(request);
+        userRepository.save(user);
     }
 }
