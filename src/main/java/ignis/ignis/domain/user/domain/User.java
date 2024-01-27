@@ -24,4 +24,10 @@ public class User {
     private Integer age;
 
     private String profileUrl;
+
+    private Integer re;
+
+    public void addRe() {
+        this.re = this.re + 5;
+    }
 }
