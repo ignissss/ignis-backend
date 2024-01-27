@@ -3,8 +3,10 @@ package ignis.ignis.domain.comment.domain;
 import ignis.ignis.domain.feed.domain.Feed;
 import ignis.ignis.domain.user.domain.User;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -25,4 +27,6 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "feed_id")
     private Feed feed;
+
+    private LocalDateTime createdDate;
 }

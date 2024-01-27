@@ -18,7 +18,7 @@ public class FindFeedResponse {
     private String user;
     private LocalDateTime createAt;
     private Integer count;
-    private List<String> comments;
+    private List<CommentDto> comments;
 
     public  FindFeedResponse (Feed feed) {
         this.title = feed.getTitle();
@@ -27,6 +27,14 @@ public class FindFeedResponse {
         this.user = feed.getUser().getUserName();
         this.createAt = feed.getCreateAt();
         this.count = feed.getCount();
-        this.comments = feed.getComments().stream().map(Comment::getComment).collect(Collectors.toList());
+        this.comments = feed.getComments().stream().map(
+                comment -> CommentDto.builder()
+                        .authorId(comment.getUser().getId())
+                        .authorName(comment.getUser().getUserName())
+                        .authorProfileUrl(comment.getUser().getProfileUrl())
+                        .content(comment.getComment())
+                        .createdDate(comment.getCreatedDate())
+                        .build()
+        ).collect(Collectors.toList());
     }
 }
