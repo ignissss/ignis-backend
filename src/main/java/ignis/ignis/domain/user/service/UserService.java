@@ -28,6 +28,7 @@ public class UserService {
             User user = User.builder()
                     .userName(request.getUserName())
                     .email(request.getEmail())
+                    .re(0)
                     .profileUrl(request.getProfileUrl())
                     .build();
 
