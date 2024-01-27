@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -37,7 +38,7 @@ public class Feed {
     private Double y;
 
     @OneToMany(mappedBy = "feed")
-    private List<Comment> comments;
+    private List<Comment> comments = new ArrayList<>();
 
     public void addCount() {
         this.count += 1;

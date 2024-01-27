@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class CommentService {
@@ -21,12 +23,14 @@ public class CommentService {
     public void create(Long feedId, String comment){
         Feed feed = feedRepository.findById(feedId).orElseThrow(()-> new RuntimeException("null"));
         User user = userFacade.getCurrentUser();
+        LocalDateTime createAt = LocalDateTime.now();
 
        commentRepository.save(
                 Comment.builder()
                         .comment(comment)
                         .user(user)
                         .feed(feed)
+                        .createdDate(createAt)
                         .build());
     }
 }

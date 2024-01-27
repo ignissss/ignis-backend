@@ -90,7 +90,7 @@ public class FeedService {
 
     @Transactional(readOnly = true)
     public FindFeedResponse queryFeed(Long feedId) {
-        Feed feed = feedRepository.findById(feedId).orElseThrow(()->new RuntimeException("null"));
+        Feed feed = feedRepository.findById(feedId).orElseThrow(() -> new RuntimeException("null"));
         return new FindFeedResponse(feed);
     }
 }
