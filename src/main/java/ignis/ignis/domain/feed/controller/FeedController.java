@@ -2,6 +2,7 @@ package ignis.ignis.domain.feed.controller;
 
 import ignis.ignis.domain.feed.controller.dto.request.XYRequest;
 import ignis.ignis.domain.feed.controller.dto.response.CountResponse;
+import ignis.ignis.domain.feed.controller.dto.response.FeedSearchResponse;
 import ignis.ignis.domain.feed.controller.dto.response.FindAllFeedResponse;
 import ignis.ignis.domain.feed.controller.dto.response.FindFeedResponse;
 import ignis.ignis.domain.feed.service.FeedService;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Tag(name = "Feed", description = "게시글")
@@ -22,7 +24,7 @@ public class FeedController {
 
     @Operation(description = "게시글 생성")
     @PostMapping
-    public void create(@RequestPart(name = "title") String title, @RequestPart("file") List<MultipartFile> file, @RequestPart XYRequest request) {
+    public void create(@RequestPart(name = "title") String title, @RequestPart("file") List<MultipartFile> file, @RequestPart XYRequest request) throws IOException {
         feedService.createFeed(title, file, request);
     }
 
@@ -34,7 +36,7 @@ public class FeedController {
 
     @Operation(description = "검색")
     @GetMapping
-    public List<FindAllFeedResponse> query(@RequestParam String title) {
+    public FeedSearchResponse query(@RequestParam String title) {
         return feedService.queryFindFeed(title);
     }
 

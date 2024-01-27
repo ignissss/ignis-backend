@@ -11,6 +11,8 @@ import java.util.List;
 public interface FeedRepository extends JpaRepository<Feed, Long> {
     List<Feed> findByTitleContains(String title);
 
+    Integer countByTitleContains(String title);
+
     @Query(value = "SELECT * FROM feed " +
             "WHERE (6371 * acos(cos(radians(:userLatitude)) * cos(radians(x)) * cos(radians(y) - radians(:userLongitude)) + sin(radians(:userLatitude)) * sin(radians(x)))) <= 1.0",
             nativeQuery = true)
