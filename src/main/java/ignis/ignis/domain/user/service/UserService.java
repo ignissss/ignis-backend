@@ -36,8 +36,7 @@ public class UserService {
 
         return LoginResponse.builder()
                 .isSignedUp(userRepository.existsByEmailAndAgeIsNotNull(request.getEmail()))
-                .accessToken(jwtTokenProvider.getToken(request.getEmail()
-                gc ).getAccessToken())
+                .accessToken(jwtTokenProvider.getToken(request.getEmail()).getAccessToken())
                 .build();
     }
 
@@ -57,9 +56,9 @@ public class UserService {
 
         return UserInfoResponse.builder()
                 .id(user.getId())
-                .age(userFind().getAge())
+                .age(user.getAge())
                 .userName(user.getUserName())
-                .point(userFind().getPoint())
+                .point(user.getRe())
                 .profileUrl(user.getProfileUrl())
                 .build();
     }
