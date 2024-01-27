@@ -23,8 +23,6 @@ public class UserService {
     @Transactional
     public LoginResponse login(LoginRequest request) {
 
-        boolean isSignedUp = true;
-
         if (!userRepository.existsByEmail(request.getEmail())) {
             User user = User.builder()
                     .userName(request.getUserName())
@@ -33,12 +31,10 @@ public class UserService {
                     .build();
 
             userRepository.save(user);
-
-            isSignedUp = false;
         }
 
         return LoginResponse.builder()
-                .isSignedUp(isSignedUp)
+                .isSignedUp(userRepository.existsByEmailAndAgeIsNotNull(request.getEmail()))
                 .accessToken(jwtTokenProvider.getToken(request.getUserName()).getAccessToken())
                 .build();
     }
