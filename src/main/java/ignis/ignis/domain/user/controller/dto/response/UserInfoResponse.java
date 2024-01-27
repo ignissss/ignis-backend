@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
@@ -17,7 +18,7 @@ public class UserInfoResponse {
     private Integer age;
     private String profileUrl;
     private Integer point;
-    private List<Feed> feeds;
+    private List<UserFeedResponse> feeds;
 
     public UserInfoResponse(User user) {
         this.id = user.getId();
@@ -25,6 +26,6 @@ public class UserInfoResponse {
         this.age = user.getAge();
         this.profileUrl = user.getProfileUrl();
         this.point = user.getRe();
-        this.feeds = user.getFeed();
+        this.feeds = user.getFeed().stream().map(UserFeedResponse::new).collect(Collectors.toList());
     }
 }

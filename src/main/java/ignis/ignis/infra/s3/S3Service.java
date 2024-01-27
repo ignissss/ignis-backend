@@ -22,7 +22,6 @@ public class S3Service implements ImageUtil {
     private String bucketName;
     private final AmazonS3 amazonS3;
 
-    @Override
     public List<String> uploadImages(List<MultipartFile> images) throws IOException {
         List<String> fileUrls = new ArrayList<>();
 
