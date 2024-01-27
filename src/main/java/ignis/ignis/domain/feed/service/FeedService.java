@@ -29,6 +29,9 @@ public class FeedService {
     public void createFeed(String title, List<MultipartFile> image) {
         User user = userFacade.getCurrentUser();
 
+        if (image.isEmpty()) {
+            throw new RuntimeException("null");
+        }
         String imageUrl = s3Service.uploadImage(image);
         String fileUrl = s3Service.getFileUrl(imageUrl);
         LocalDateTime createAt = LocalDateTime.now();
@@ -41,6 +44,7 @@ public class FeedService {
                         .count(0)
                         .build()
         );
+        user.addRe();
     }
 
     @Transactional(readOnly = true)
