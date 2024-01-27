@@ -1,6 +1,4 @@
 spring:
-  main:
-    allow-bean-definition-overriding: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${URL}
@@ -8,17 +6,31 @@ spring:
     password: ${PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: create
-    show-sql: true
-
-  redis:
-    host: ${REDIS_HOST}
-    port: ${REDIS_PORT}
+      ddl-auto: update
+    properties:
+      show_sql: true
 
   jackson:
-    property-naming-strategy : SNAKE_CASE
+    property-naming-strategy: SNAKE_CASE
 
-  jwt :
-    secretKey : ${JWT_KEY}
-    accessExp : ${ACCESS_TOKEN_TIME}
-    refreshExp : ${REFRESH_TOKEN_TIME}
+  jwt:
+    key: ${JWT_KEY}
+    live:
+      accessToken: ${ACCESS_TOKEN_TIME}
+
+  cloud:
+    aws:
+      credentials:
+        accessKey: ${AWS_ACCESS_KEY}
+        secretKey: ${AWS_SECRET_ACCESS_KEY}
+      s3:
+        bucket: ${BUCKET}
+      region:
+        static: ${STATIC}
+      stack:
+        auto: false
+
+servlet:
+  multipart:
+    max-file-size: 10MB
+    max-request-size: 10MB
