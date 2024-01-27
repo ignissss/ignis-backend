@@ -26,6 +26,7 @@ public class User {
 
     private String profileUrl;
 
+    @Column(nullable = false)
     private Integer re;
 
     @OneToMany(mappedBy = "user")
