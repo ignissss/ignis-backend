@@ -106,4 +106,10 @@ public class FeedService {
         Feed feed = feedRepository.findById(feedId).orElseThrow(() -> new RuntimeException("null"));
         return new FindFeedResponse(feed);
     }
+
+    @Transactional
+    public void deleteFeed(Long feedId) {
+        Feed feed = feedRepository.findById(feedId).orElseThrow(()-> new RuntimeException("s"));
+        feedRepository.delete(feed);
+    }
 }

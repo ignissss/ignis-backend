@@ -55,4 +55,10 @@ public class FeedController {
     public CountResponse deleteCount(@PathVariable Long feedId) {
         return feedService.deleteCount(feedId);
     }
+
+    @Operation(description = "게시글 삭제")
+    @DeleteMapping("/{feedId}")
+    public void deleteFeed(@PathVariable Long feedId) {
+        feedService.deleteFeed(feedId);
+    }
 }
