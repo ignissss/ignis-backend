@@ -2,6 +2,7 @@ package ignis.ignis.domain.feed.controller;
 
 import ignis.ignis.domain.feed.controller.dto.request.XYRequest;
 import ignis.ignis.domain.feed.controller.dto.response.CountResponse;
+import ignis.ignis.domain.feed.controller.dto.response.FeedSearchResponse;
 import ignis.ignis.domain.feed.controller.dto.response.FindAllFeedResponse;
 import ignis.ignis.domain.feed.controller.dto.response.FindFeedResponse;
 import ignis.ignis.domain.feed.service.FeedService;
@@ -34,7 +35,7 @@ public class FeedController {
 
     @Operation(description = "검색")
     @GetMapping
-    public List<FindAllFeedResponse> query(@RequestParam String title) {
+    public FeedSearchResponse query(@RequestParam String title) {
         return feedService.queryFindFeed(title);
     }
 

@@ -3,6 +3,7 @@ package ignis.ignis.domain.feed.service;
 import com.amazonaws.services.kms.model.NotFoundException;
 import ignis.ignis.domain.feed.controller.dto.request.XYRequest;
 import ignis.ignis.domain.feed.controller.dto.response.CountResponse;
+import ignis.ignis.domain.feed.controller.dto.response.FeedSearchResponse;
 import ignis.ignis.domain.feed.controller.dto.response.FindAllFeedResponse;
 import ignis.ignis.domain.feed.controller.dto.response.FindFeedResponse;
 import ignis.ignis.domain.feed.domain.Count;
@@ -96,8 +97,11 @@ public class FeedService {
     }
 
     @Transactional(readOnly = true)
-    public List<FindAllFeedResponse> queryFindFeed(String title) {
-        return feedRepository.findByTitleContains(title).stream().map(FindAllFeedResponse::findAllFeedResponse).collect(Collectors.toList());
+    public FeedSearchResponse queryFindFeed(String title) {
+        return FeedSearchResponse.builder()
+                .feeds(feedRepository.findByTitleContains(title).stream().map(FindAllFeedResponse::findAllFeedResponse).collect(Collectors.toList()))
+                .count(feedRepository.countByTitleContains(title))
+                .build();
     }
 
     @Transactional(readOnly = true)
