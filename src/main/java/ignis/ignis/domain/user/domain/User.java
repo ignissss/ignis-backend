@@ -26,7 +26,7 @@ public class User {
 
     private String profileUrl;
 
-    private Integer re = 0;
+    private Integer re;
 
     @OneToMany(mappedBy = "user")
     private List<Feed> feed = new ArrayList<>();
@@ -38,5 +38,9 @@ public class User {
     public void signup(SignupRequest request) {
         this.userName = request.getUserName();
         this.age = request.getAge();
+    }
+
+    public void initRe() {
+        this.re = 0;
     }
 }
