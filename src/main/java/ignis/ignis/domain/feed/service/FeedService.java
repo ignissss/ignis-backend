@@ -1,6 +1,7 @@
 package ignis.ignis.domain.feed.service;
 
 import com.amazonaws.services.kms.model.NotFoundException;
+import ignis.ignis.domain.feed.controller.dto.request.XYRequest;
 import ignis.ignis.domain.feed.controller.dto.response.CountResponse;
 import ignis.ignis.domain.feed.controller.dto.response.FindAllFeedResponse;
 import ignis.ignis.domain.feed.controller.dto.response.FindFeedResponse;
@@ -27,7 +28,7 @@ public class FeedService {
     private final S3Service s3Service;
 
     @Transactional
-    public void createFeed(String title, List<MultipartFile> image) {
+    public void createFeed(String title, List<MultipartFile> image, XYRequest request) {
         User user = userFacade.getCurrentUser();
 
         if (image.isEmpty()) {
@@ -43,6 +44,8 @@ public class FeedService {
                         .imageUrl(fileUrl)
                         .createAt(createAt)
                         .count(0)
+                        .x(request.getX())
+                        .y(request.getY())
                         .build()
         );
         user.addRe();

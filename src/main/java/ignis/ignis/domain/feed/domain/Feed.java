@@ -33,6 +33,9 @@ public class Feed {
 
     private Integer count;
 
+    private Double x;
+    private Double y;
+
     @OneToMany(mappedBy = "feed")
     private List<Comment> comments;
 

@@ -15,6 +15,9 @@ public class FindAllFeedResponse {
     private String user;
     private LocalDateTime createAt;
     private Integer count;
+    private Double x;
+    private Double y;
+
 
     public static FindAllFeedResponse findAllFeedResponse(Feed feed) {
         return FindAllFeedResponse.builder()
