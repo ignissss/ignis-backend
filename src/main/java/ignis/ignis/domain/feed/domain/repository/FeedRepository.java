@@ -18,6 +18,7 @@ public interface FeedRepository extends JpaRepository<Feed, Long> {
                                  @Param("userLongitude") double userLongitude);
 
 
-    boolean existsByIdAndUser(Long feedId,User user);
+    Boolean existsByUserAndFeed(User user, Feed feed);
+
 }
 

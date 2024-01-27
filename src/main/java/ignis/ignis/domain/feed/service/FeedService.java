@@ -66,7 +66,7 @@ public class FeedService {
     @Transactional
     public CountResponse addCount(Long feedId) {
         Feed feed = feedRepository.findById(feedId).orElseThrow(()->new NotFoundException("adsf"));
-        if (!feedRepository.existsByIdAndUser(feedId, userFacade.getCurrentUser())) {
+        if (feedRepository.existsByUserAndFeed(userFacade.getCurrentUser(), feed)) {
             throw new RuntimeException("asdf");
         }
         feed.addCount();
@@ -76,7 +76,7 @@ public class FeedService {
     @Transactional
     public CountResponse deleteCount(Long feedId) {
         Feed feed = feedRepository.findById(feedId).orElseThrow(()->new NotFoundException("adsf"));
-        if (feedRepository.existsByIdAndUser(feedId, userFacade.getCurrentUser())) {
+        if (!feedRepository.existsByUserAndFeed(userFacade.getCurrentUser(), feed)) {
             throw new RuntimeException("asdf");
         }
         feed.deleteCount();
