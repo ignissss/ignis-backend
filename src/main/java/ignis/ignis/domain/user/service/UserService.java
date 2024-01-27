@@ -2,6 +2,7 @@ package ignis.ignis.domain.user.service;
 
 import ignis.ignis.domain.user.controller.dto.request.LoginRequest;
 import ignis.ignis.domain.user.controller.dto.request.SignupRequest;
+import ignis.ignis.domain.user.controller.dto.response.LoginResponse;
 import ignis.ignis.domain.user.domain.User;
 import ignis.ignis.domain.user.domain.repository.UserRepository;
 import ignis.ignis.domain.user.facade.UserFacade;
@@ -20,7 +21,10 @@ public class UserService {
     private final UserFacade userFacade;
 
     @Transactional
-    public TokenResponse login(LoginRequest request) {
+    public LoginResponse login(LoginRequest request) {
+
+        boolean isSignedUp = true;
+
         if (!userRepository.existsByEmail(request.getEmail())) {
             User user = User.builder()
                     .userName(request.getUserName())
@@ -29,9 +33,14 @@ public class UserService {
                     .build();
 
             userRepository.save(user);
+
+            isSignedUp = false;
         }
 
-        return jwtTokenProvider.getToken(request.getUserName());
+        return LoginResponse.builder()
+                .isSignedUp(isSignedUp)
+                .accessToken(jwtTokenProvider.getToken(request.getUserName()).getAccessToken())
+                .build();
     }
 
     @Transactional
