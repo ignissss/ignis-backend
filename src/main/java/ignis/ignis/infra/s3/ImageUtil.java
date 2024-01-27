@@ -2,7 +2,9 @@ package ignis.ignis.infra.s3;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 public interface ImageUtil {
 
-    String uploadImage(MultipartFile image) throws Exception;
+    String uploadImage(List<MultipartFile> image) throws Exception;
 }

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -16,28 +18,33 @@ import java.util.UUID;
 public class S3Service implements ImageUtil {
 
     @Value("${spring.cloud.aws.s3.bucket}")
-    private String bucketName;
+    private final String bucketName;
     private final AmazonS3 amazonS3;
 
     @Override
-    public String uploadImage(MultipartFile image) throws Exception {
-        if (image.isEmpty() || image.getOriginalFilename() == null) {
-            throw new Exception("sdf");
+    public String uploadImage(List<MultipartFile> images) {
+        if (images.isEmpty() || images.stream().anyMatch(image -> image.getOriginalFilename() == null)) {
+            throw new RuntimeException("Invalid images provided");
         }
 
-        String fileName = UUID.randomUUID() + image.getOriginalFilename();
+        StringBuilder fileUrls = new StringBuilder();
 
-        try {
-            PutObjectRequest request = new PutObjectRequest(
-                    bucketName, fileName, image.getInputStream(), getObjectMetadata(image)
-            ).withCannedAcl(CannedAccessControlList.PublicRead);
+        for (MultipartFile image : images) {
+            String fileName = UUID.randomUUID() + image.getOriginalFilename();
 
-            amazonS3.putObject(request);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            try {
+                PutObjectRequest request = new PutObjectRequest(
+                        bucketName, fileName, image.getInputStream(), getObjectMetadata(image)
+                ).withCannedAcl(CannedAccessControlList.PublicRead);
+
+                amazonS3.putObject(request);
+                fileUrls.append(getFileUrl(fileName)).append("\n");
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to upload image: " + e.getMessage(), e);
+            }
         }
 
-        return getFileUrl(fileName);
+        return fileUrls.toString();
     }
 
     private ObjectMetadata getObjectMetadata(MultipartFile image) {
