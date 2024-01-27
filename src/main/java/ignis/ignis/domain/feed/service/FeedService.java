@@ -73,34 +73,25 @@ public class FeedService {
     }
 
     @Transactional
-    public CountResponse addCount(Long feedId) {
+    public CountResponse like(Long feedId) {
         User user = userFacade.getCurrentUser();
-        Feed feed = feedRepository.findById(feedId).orElseThrow(()->new NotFoundException("adsf"));
-        if(countRepository.existsByUserAndFeed(user, feed)) {
-            throw new RuntimeException(("adsf"));
+        Feed feed = feedRepository.findById(feedId).orElseThrow(() -> new NotFoundException("asdf"));
+        boolean like = countRepository.existsByUserAndFeed(user, feed);
+        if (like) {
+            countRepository.deleteByUserAndFeed(user, feed);
+            feed.deleteCount();
+        } else {
+            countRepository.save(
+                    Count.builder()
+                            .user(user)
+                            .feed(feed)
+                            .build());
+            feed.addCount();
         }
-        countRepository.save(
-                Count.builder()
-                        .user(user)
-                        .feed(feed)
-                        .build());
-
-        feed.addCount();
         return new CountResponse(feed.getCount());
     }
 
-    @Transactional
-    public CountResponse deleteCount(Long feedId) {
-        User user = userFacade.getCurrentUser();
-        Feed feed = feedRepository.findById(feedId).orElseThrow(()->new NotFoundException("adsf"));
-        if (!countRepository.existsByUserAndFeed(user, feed)) {
-            throw new RuntimeException("adsf");
-        }
-        countRepository.deleteByUserAndFeed(user, feed);
 
-        feed.deleteCount();
-        return new CountResponse(feed.getCount());
-    }
 
     @Transactional(readOnly = true)
     public FeedSearchResponse queryFindFeed(String title) {

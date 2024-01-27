@@ -47,16 +47,11 @@ public class FeedController {
     }
 
     @Operation(description = "좋아요")
-    @PostMapping("/add/count/{feedId}")
+    @PostMapping("/count/{feedId}")
     public CountResponse addCount(@PathVariable Long feedId) {
-        return feedService.addCount(feedId);
+        return feedService.like(feedId);
     }
 
-    @Operation(description = "싫어요")
-    @DeleteMapping("/delete/count/{feedId}")
-    public CountResponse deleteCount(@PathVariable Long feedId) {
-        return feedService.deleteCount(feedId);
-    }
 
     @Operation(description = "게시글 삭제")
     @DeleteMapping("/{feedId}")
