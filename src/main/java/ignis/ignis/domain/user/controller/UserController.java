@@ -1,11 +1,12 @@
 package ignis.ignis.domain.user.controller;
 
 import ignis.ignis.domain.user.controller.dto.request.LoginRequest;
+import ignis.ignis.domain.user.controller.dto.request.SignupRequest;
+import ignis.ignis.domain.user.controller.dto.response.LoginResponse;
+import ignis.ignis.domain.user.controller.dto.response.UserInfoResponse;
 import ignis.ignis.domain.user.service.UserService;
-import ignis.ignis.global.security.jwt.dto.TokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,7 +20,17 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/login")
-    public TokenResponse login(@RequestBody @Valid LoginRequest request) {
+    public LoginResponse login(@RequestBody @Valid LoginRequest request) {
         return userService.login(request);
+    }
+
+    @PatchMapping("/signup")
+    public void signup(@RequestBody @Valid SignupRequest request) {
+        userService.signup(request);
+    }
+
+    @GetMapping
+    public UserInfoResponse findUser() {
+        return userService.userFind();
     }
 }

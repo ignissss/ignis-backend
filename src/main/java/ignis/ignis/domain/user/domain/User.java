@@ -1,5 +1,6 @@
 package ignis.ignis.domain.user.domain;
 
+import ignis.ignis.domain.user.controller.dto.request.SignupRequest;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -29,5 +30,10 @@ public class User {
 
     public void addRe() {
         this.re = this.re + 5;
+    }
+
+    public void signup(SignupRequest request) {
+        this.userName = request.getUserName();
+        this.age = request.getAge();
     }
 }
