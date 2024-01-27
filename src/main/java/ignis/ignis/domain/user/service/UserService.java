@@ -47,7 +47,6 @@ public class UserService {
         if (user.getAge() != null) throw new RuntimeException();
 
         user.signup(request);
-        userRepository.save(user);
     }
 
     @Transactional(readOnly = true)
