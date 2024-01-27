@@ -22,8 +22,8 @@ public class JwtTokenProvider {
     private final AuthDetailsService authDetailsService;
     private static final String ACCESS_KEY = "access_token";
 
-    public TokenResponse getToken(String userName) {
-        String accessToken = generateToken(userName, jwtProperties.getAccessExp(),ACCESS_KEY);
+    public TokenResponse getToken(String email) {
+        String accessToken = generateToken(email, jwtProperties.getAccessExp(),ACCESS_KEY);
 
         return new TokenResponse(accessToken);
     }

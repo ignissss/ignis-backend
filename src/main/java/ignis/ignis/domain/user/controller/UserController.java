@@ -3,6 +3,7 @@ package ignis.ignis.domain.user.controller;
 import ignis.ignis.domain.user.controller.dto.request.LoginRequest;
 import ignis.ignis.domain.user.controller.dto.request.SignupRequest;
 import ignis.ignis.domain.user.controller.dto.response.LoginResponse;
+import ignis.ignis.domain.user.controller.dto.response.UserInfoResponse;
 import ignis.ignis.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,5 +27,10 @@ public class UserController {
     @PatchMapping("/signup")
     public void signup(@RequestBody @Valid SignupRequest request) {
         userService.signup(request);
+    }
+
+    @GetMapping
+    public UserInfoResponse findUser() {
+        return userService.userFind();
     }
 }

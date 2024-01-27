@@ -3,6 +3,7 @@ package ignis.ignis.domain.user.service;
 import ignis.ignis.domain.user.controller.dto.request.LoginRequest;
 import ignis.ignis.domain.user.controller.dto.request.SignupRequest;
 import ignis.ignis.domain.user.controller.dto.response.LoginResponse;
+import ignis.ignis.domain.user.controller.dto.response.UserInfoResponse;
 import ignis.ignis.domain.user.domain.User;
 import ignis.ignis.domain.user.domain.repository.UserRepository;
 import ignis.ignis.domain.user.facade.UserFacade;
@@ -35,7 +36,8 @@ public class UserService {
 
         return LoginResponse.builder()
                 .isSignedUp(userRepository.existsByEmailAndAgeIsNotNull(request.getEmail()))
-                .accessToken(jwtTokenProvider.getToken(request.getUserName()).getAccessToken())
+                .accessToken(jwtTokenProvider.getToken(request.getEmail()
+                gc ).getAccessToken())
                 .build();
     }
 
@@ -47,5 +49,18 @@ public class UserService {
 
         user.signup(request);
         userRepository.save(user);
+    }
+
+    @Transactional(readOnly = true)
+    public UserInfoResponse userFind() {
+        User user = userFacade.getCurrentUser();
+
+        return UserInfoResponse.builder()
+                .id(user.getId())
+                .age(userFind().getAge())
+                .userName(user.getUserName())
+                .point(userFind().getPoint())
+                .profileUrl(user.getProfileUrl())
+                .build();
     }
 }
