@@ -27,6 +27,8 @@ public class FindAllFeedResponse {
                 .imageUrl(feed.getImageUrl())
                 .user(feed.getUser().getUserName())
                 .count(feed.getCount())
+                .x(feed.getX())
+                .y(feed.getY())
                 .build();
     }
 }

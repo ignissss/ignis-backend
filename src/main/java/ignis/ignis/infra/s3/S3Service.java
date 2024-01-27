@@ -18,7 +18,7 @@ import java.util.UUID;
 public class S3Service implements ImageUtil {
 
     @Value("${spring.cloud.aws.s3.bucket}")
-    private final String bucketName;
+    private String bucketName;
     private final AmazonS3 amazonS3;
 
     @Override

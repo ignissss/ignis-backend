@@ -7,6 +7,7 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
@@ -17,7 +18,7 @@ public class FindFeedResponse {
     private String user;
     private LocalDateTime createAt;
     private Integer count;
-    private List<Comment> comments;
+    private List<String> comments;
 
     public  FindFeedResponse (Feed feed) {
         this.title = feed.getTitle();
@@ -26,6 +27,6 @@ public class FindFeedResponse {
         this.user = feed.getUser().getUserName();
         this.createAt = feed.getCreateAt();
         this.count = feed.getCount();
-        this.comments = feed.getComments();
+        this.comments = feed.getComments().stream().map(Comment::getComment).collect(Collectors.toList());
     }
 }
