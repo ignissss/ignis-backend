@@ -61,6 +61,7 @@ public class UserService {
                 .userName(user.getUserName())
                 .point(user.getRe())
                 .profileUrl(user.getProfileUrl())
+                .feeds(user.getFeed())
                 .build();
     }
 }

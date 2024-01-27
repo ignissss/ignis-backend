@@ -1,12 +1,12 @@
 package ignis.ignis.domain.user.domain;
 
+import ignis.ignis.domain.feed.domain.Feed;
 import ignis.ignis.domain.user.controller.dto.request.SignupRequest;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,6 +27,9 @@ public class User {
     private String profileUrl;
 
     private Integer re;
+
+    @OneToMany(mappedBy = "user")
+    private List<Feed> feed = new ArrayList<>();
 
     public void addRe() {
         this.re = this.re + 5;

@@ -37,7 +37,7 @@ public class Feed {
     private Double x;
     private Double y;
 
-    @OneToMany(mappedBy = "feed")
+    @OneToMany(mappedBy = "feed", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
     public void addCount() {
