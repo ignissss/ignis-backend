@@ -24,15 +24,14 @@ public class UserService {
     public LoginResponse login(LoginRequest request) {
 
         if (!userRepository.existsByEmail(request.getEmail())) {
-            User user = User.builder()
-                    .userName(request.getUserName())
-                    .email(request.getEmail())
-                    .profileUrl(request.getProfileUrl())
-                    .build();
-
-            user.initRe();
-
-            userRepository.save(user);
+            userRepository.save(
+                    User.builder()
+                            .userName(request.getUserName())
+                            .email(request.getEmail())
+                            .profileUrl(request.getProfileUrl())
+                            .re(0)
+                            .build()
+            );
         }
 
         return LoginResponse.builder()

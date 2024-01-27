@@ -38,6 +38,7 @@ public class User {
     public void signup(SignupRequest request) {
         this.userName = request.getUserName();
         this.age = request.getAge();
+        this.re = 0;
     }
 
     public void initRe() {
