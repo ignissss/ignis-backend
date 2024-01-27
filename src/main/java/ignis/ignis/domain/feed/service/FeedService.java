@@ -38,13 +38,12 @@ public class FeedService {
             throw new RuntimeException("null");
         }
         String imageUrl = s3Service.uploadImage(image);
-        String fileUrl = s3Service.getFileUrl(imageUrl);
         LocalDateTime createAt = LocalDateTime.now();
         feedRepository.save(
                 Feed.builder()
                         .user(user)
                         .title(title)
-                        .imageUrl(fileUrl)
+                        .imageUrl(imageUrl)
                         .createAt(createAt)
                         .count(0)
                         .x(request.getX())

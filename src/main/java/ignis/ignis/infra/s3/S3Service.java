@@ -54,8 +54,4 @@ public class S3Service implements ImageUtil {
 
         return objectMetadata;
     }
-
-    public String getFileUrl(String fileName) {
-        return amazonS3.getUrl(bucketName, fileName).toString();
-    }
 }
