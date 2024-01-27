@@ -2,13 +2,13 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.6'
     id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.jetbrains.kotlin.jvm'
 }
 
 group = 'ignis'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    sourceCompatibility = '17'
 }
 
 configurations {
@@ -42,8 +42,12 @@ dependencies {
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
     // swagger
     implementation 'org.springdoc:springdoc-openapi-ui:1.6.11'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+kotlin {
+    jvmToolchain(17)
 }

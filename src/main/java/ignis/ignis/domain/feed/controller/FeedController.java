@@ -1,5 +1,6 @@
 package ignis.ignis.domain.feed.controller;
 
+import ignis.ignis.domain.feed.controller.dto.request.XYRequest;
 import ignis.ignis.domain.feed.controller.dto.response.CountResponse;
 import ignis.ignis.domain.feed.controller.dto.response.FindAllFeedResponse;
 import ignis.ignis.domain.feed.controller.dto.response.FindFeedResponse;
@@ -17,13 +18,13 @@ public class FeedController {
     private final FeedService feedService;
 
     @PostMapping
-    public void create(@RequestPart(name = "title") String title, @RequestPart("file") List<MultipartFile> file) {
-        feedService.createFeed(title, file);
+    public void create(@RequestPart(name = "title") String title, @RequestPart("file") List<MultipartFile> file, @RequestPart XYRequest request) {
+        feedService.createFeed(title, file, request);
     }
 
     @GetMapping("/all")
-    public List<FindAllFeedResponse> all() {
-        return feedService.queryAllFeed();
+    public List<FindAllFeedResponse> all(@RequestParam double x,@RequestParam double y) {
+        return feedService.getFeed(x, y);
     }
 
     @GetMapping

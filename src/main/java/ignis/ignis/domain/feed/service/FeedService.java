@@ -52,8 +52,15 @@ public class FeedService {
     }
 
     @Transactional(readOnly = true)
-    public List<FindAllFeedResponse> queryAllFeed() {
-        return feedRepository.findAll().stream().map(FindAllFeedResponse::findAllFeedResponse).collect(Collectors.toList());
+    public List<FindAllFeedResponse> getFeed(double userLatitude, double userLongitude) {
+        List<Feed> feed = feedRepository.findFeedsNearUser(userLatitude, userLongitude);
+        return map(feed);
+    }
+
+    private List<FindAllFeedResponse> map(List<Feed> feeds) {
+        return feeds.stream()
+                .map(FindAllFeedResponse::findAllFeedResponse)
+                .collect(Collectors.toList());
     }
 
     @Transactional
