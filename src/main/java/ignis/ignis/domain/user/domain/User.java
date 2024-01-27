@@ -26,8 +26,7 @@ public class User {
 
     private String profileUrl;
 
-    @Column(nullable = false)
-    private Integer re;
+    private Integer re = 0;
 
     @OneToMany(mappedBy = "user")
     private List<Feed> feed = new ArrayList<>();
