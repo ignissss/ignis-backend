@@ -1,6 +1,7 @@
 package ignis.ignis.domain.feed.domain.repository;
 
 import ignis.ignis.domain.feed.domain.Feed;
+import ignis.ignis.domain.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,5 +17,7 @@ public interface FeedRepository extends JpaRepository<Feed, Long> {
     List<Feed> findFeedsNearUser(@Param("userLatitude") double userLatitude,
                                  @Param("userLongitude") double userLongitude);
 
+
+    boolean existsByIdAndUser(Long feedId,User user);
 }
 
