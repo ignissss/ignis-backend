@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,37 +22,29 @@ public class S3Service implements ImageUtil {
     private String bucketName;
     private final AmazonS3 amazonS3;
 
-    @Override
-    public String uploadImage(List<MultipartFile> images) {
-        if (images.isEmpty() || images.stream().anyMatch(image -> image.getOriginalFilename() == null)) {
-            throw new RuntimeException("Invalid images provided");
-        }
-
-        StringBuilder fileUrls = new StringBuilder();
+    public List<String> uploadImages(List<MultipartFile> images) throws IOException {
+        List<String> fileUrls = new ArrayList<>();
 
         for (MultipartFile image : images) {
-            String fileName = UUID.randomUUID() + image.getOriginalFilename();
-
-            try {
-                PutObjectRequest request = new PutObjectRequest(
-                        bucketName, fileName, image.getInputStream(), getObjectMetadata(image)
-                ).withCannedAcl(CannedAccessControlList.PublicRead);
-
-                amazonS3.putObject(request);
-                fileUrls.append(fileName).append("\n");
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to upload image: " + e.getMessage(), e);
-            }
+            String fileName = UUID.randomUUID().toString() + image.getOriginalFilename();
+            PutObjectRequest request = new PutObjectRequest(
+                    bucketName, fileName, image.getInputStream(), getObjectMetadata(image)
+            ).withCannedAcl(CannedAccessControlList.PublicRead);
+            amazonS3.putObject(request);
+            fileUrls.add(getFileUrl(fileName));
         }
 
-        return fileUrls.toString();
+        return fileUrls;
     }
 
     private ObjectMetadata getObjectMetadata(MultipartFile image) {
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(image.getSize());
         objectMetadata.setContentType(image.getContentType());
-
         return objectMetadata;
+    }
+
+    public String getFileUrl(String fileName) {
+        return amazonS3.getUrl(bucketName, fileName).toString();
     }
 }
