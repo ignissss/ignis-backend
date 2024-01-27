@@ -75,11 +75,6 @@ public class FeedService {
     @Transactional
     public CountResponse like(Long feedId) {
         User user = userFacade.getCurrentUser();
-<<<<<<< HEAD
-        Feed feed = feedRepository.findById(feedId).orElseThrow(()->new RuntimeException("asdf"));
-        if(countRepository.existsByUserAndFeed(user, feed)) {
-            throw new RuntimeException(("adsf"));
-=======
         Feed feed = feedRepository.findById(feedId).orElseThrow(() -> new NotFoundException("asdf"));
         boolean like = countRepository.existsByUserAndFeed(user, feed);
         if (like) {
@@ -92,7 +87,6 @@ public class FeedService {
                             .feed(feed)
                             .build());
             feed.addCount();
->>>>>>> refs/remotes/origin/master
         }
         return new CountResponse(feed.getCount());
     }
