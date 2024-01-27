@@ -38,7 +38,7 @@ public class S3Service implements ImageUtil {
                 ).withCannedAcl(CannedAccessControlList.PublicRead);
 
                 amazonS3.putObject(request);
-                fileUrls.append(getFileUrl(fileName)).append("\n");
+                fileUrls.append(fileName).append("\n");
             } catch (IOException e) {
                 throw new RuntimeException("Failed to upload image: " + e.getMessage(), e);
             }
