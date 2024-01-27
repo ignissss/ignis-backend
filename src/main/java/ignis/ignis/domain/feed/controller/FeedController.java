@@ -2,6 +2,7 @@ package ignis.ignis.domain.feed.controller;
 
 import ignis.ignis.domain.feed.controller.dto.response.CountResponse;
 import ignis.ignis.domain.feed.controller.dto.response.FindAllFeedResponse;
+import ignis.ignis.domain.feed.controller.dto.response.FindFeedResponse;
 import ignis.ignis.domain.feed.service.FeedService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,11 @@ public class FeedController {
     @GetMapping
     public List<FindAllFeedResponse> query(@RequestParam String title) {
         return feedService.queryFindFeed(title);
+    }
+
+    @GetMapping("/{feedId}")
+    public FindFeedResponse findFeed(@PathVariable Long feedId) {
+        return feedService.queryFeed(feedId);
     }
 
     @PostMapping("/add/count/{feedId}")
