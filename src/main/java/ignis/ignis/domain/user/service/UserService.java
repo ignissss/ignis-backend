@@ -23,17 +23,16 @@ public class UserService {
     @Transactional
     public LoginResponse login(LoginRequest request) {
 
-        if (userRepository.existsByEmail(request.getEmail())) {
-           throw new RuntimeException("asdf");
-
+        if (!userRepository.existsByEmail(request.getEmail())) {
+            userRepository.save(
+                    User.builder()
+                            .userName(request.getUserName())
+                            .email(request.getEmail())
+                            .profileUrl(request.getProfileUrl())
+                            .rewards(0)
+                            .build());
         }
-        userRepository.save(
-                User.builder()
-                        .userName(request.getUserName())
-                        .email(request.getEmail())
-                        .profileUrl(request.getProfileUrl())
-                        .rewards(0)
-                        .build());
+
 
         return LoginResponse.builder()
                 .isSignedUp(userRepository.existsByEmailAndAgeIsNotNull(request.getEmail()))
