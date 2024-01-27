@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @Tag(name = "Feed", description = "게시글")
@@ -24,7 +23,7 @@ public class FeedController {
 
     @Operation(description = "게시글 생성")
     @PostMapping
-    public void create(@RequestPart(name = "title") String title, @RequestPart("file") List<MultipartFile> file, @RequestPart XYRequest request) throws IOException {
+    public void create(@RequestPart(name = "title") String title, @RequestPart("file") List<MultipartFile> file, @RequestPart XYRequest request) {
         feedService.createFeed(title, file, request);
     }
 
@@ -47,7 +46,7 @@ public class FeedController {
     }
 
     @Operation(description = "좋아요")
-    @PostMapping("/count/{feedId}")
+    @PostMapping("/add/count/{feedId}")
     public CountResponse addCount(@PathVariable Long feedId) {
         return feedService.addCount(feedId);
     }
