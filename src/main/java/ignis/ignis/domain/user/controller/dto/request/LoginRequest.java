@@ -9,9 +9,9 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class LoginRequest {
     @NotBlank
-    private String token;
-    @NotBlank
     private String userName;
+    @NotBlank
+    private String email;
     @NotBlank
     private String profileUrl;
 }

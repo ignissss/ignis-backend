@@ -18,10 +18,10 @@ public class UserService {
 
     @Transactional
     public TokenResponse login(LoginRequest request) {
-        if (!userRepository.existsByToken(request.getToken())) {
+        if (!userRepository.existsByEmail(request.getEmail())) {
             User user = User.builder()
-                    .token(request.getToken())
                     .userName(request.getUserName())
+                    .email(request.getEmail())
                     .profileUrl(request.getProfileUrl())
                     .build();
 

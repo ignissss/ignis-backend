@@ -14,7 +14,10 @@ import javax.persistence.Id;
 @Builder
 public class User {
     @Id
-    private String token;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String email;
 
     private String userName;
 
