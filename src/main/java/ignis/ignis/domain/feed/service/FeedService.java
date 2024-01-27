@@ -85,7 +85,7 @@ public class FeedService {
 
     @Transactional(readOnly = true)
     public List<FindAllFeedResponse> queryFindFeed(String title) {
-        return feedRepository.findByTitle(title).stream().map(FindAllFeedResponse::findAllFeedResponse).collect(Collectors.toList());
+        return feedRepository.findByTitleContains(title).stream().map(FindAllFeedResponse::findAllFeedResponse).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
