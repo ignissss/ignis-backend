@@ -26,22 +26,22 @@ public class User {
 
     private String profileUrl;
 
-    private Integer re;
+    private Integer rewards;
 
     @OneToMany(mappedBy = "user")
     private List<Feed> feed = new ArrayList<>();
 
     public void addRe() {
-        this.re = this.re + 5;
+        this.rewards = (this.rewards != null) ? this.rewards + 5 : 5;
     }
 
     public void signup(SignupRequest request) {
         this.userName = request.getUserName();
         this.age = request.getAge();
-        this.re = 0;
+        this.rewards = 0;
     }
 
     public void initRe() {
-        this.re = 0;
+        this.rewards = 0;
     }
 }

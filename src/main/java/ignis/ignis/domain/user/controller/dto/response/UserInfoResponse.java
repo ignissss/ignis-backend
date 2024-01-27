@@ -27,7 +27,7 @@ public class UserInfoResponse {
         this.email = user.getEmail();
         this.age = user.getAge();
         this.profileUrl = user.getProfileUrl();
-        this.point = user.getRe();
+        this.point = user.getRewards();
         this.feeds = user.getFeed().stream().map(UserFeedResponse::new).collect(Collectors.toList());
     }
 }
