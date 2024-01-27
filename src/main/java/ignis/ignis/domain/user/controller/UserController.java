@@ -1,6 +1,7 @@
 package ignis.ignis.domain.user.controller;
 
 import ignis.ignis.domain.user.controller.dto.request.LoginRequest;
+import ignis.ignis.domain.user.controller.dto.request.SignupRequest;
 import ignis.ignis.domain.user.service.UserService;
 import ignis.ignis.global.security.jwt.dto.TokenResponse;
 import lombok.RequiredArgsConstructor;
@@ -21,5 +22,10 @@ public class UserController {
     @PostMapping("/login")
     public TokenResponse login(@RequestBody @Valid LoginRequest request) {
         return userService.login(request);
+    }
+
+    @PatchMapping("/signup")
+    public void signup(@RequestBody @Valid SignupRequest request) {
+
     }
 }
