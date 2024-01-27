@@ -87,7 +87,7 @@ public class FeedService {
     public CountResponse deleteCount(Long feedId) {
         User user = userFacade.getCurrentUser();
         Feed feed = feedRepository.findById(feedId).orElseThrow(()->new NotFoundException("adsf"));
-        if (countRepository.existsByUserAndFeed(user, feed)) {
+        if (!countRepository.existsByUserAndFeed(user, feed)) {
             throw new RuntimeException("adsf");
         }
         countRepository.deleteByUserAndFeed(user, feed);
