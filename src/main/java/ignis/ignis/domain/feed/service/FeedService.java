@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,25 +32,31 @@ public class FeedService {
     private final CountRepository countRepository;
 
     @Transactional
-    public void createFeed(String title, List<MultipartFile> image, XYRequest request) {
+    public void createFeed(String title, List<MultipartFile> images, XYRequest request) throws IOException {
         User user = userFacade.getCurrentUser();
 
-        if (image.isEmpty()) {
-            throw new RuntimeException("null");
+        if (images.isEmpty()) {
+            throw new RuntimeException("Image list is empty");
         }
-        String imageUrl = s3Service.uploadImage(image);
+
+        List<String> imageUrls = s3Service.uploadImages(images);
+
         LocalDateTime createAt = LocalDateTime.now();
-        feedRepository.save(
-                Feed.builder()
-                        .user(user)
-                        .title(title)
-                        .imageUrl(imageUrl)
-                        .createAt(createAt)
-                        .count(0)
-                        .x(request.getX())
-                        .y(request.getY())
-                        .build()
-        );
+
+        for (String imageUrl : imageUrls) {
+            feedRepository.save(
+                    Feed.builder()
+                            .user(user)
+                            .title(title)
+                            .imageUrl(imageUrl)
+                            .createAt(createAt)
+                            .count(0)
+                            .x(request.getX())
+                            .y(request.getY())
+                            .build()
+            );
+        }
+
         user.addRe();
     }
 
