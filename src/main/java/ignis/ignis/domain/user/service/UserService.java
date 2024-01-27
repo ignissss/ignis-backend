@@ -1,6 +1,5 @@
 package ignis.ignis.domain.user.service;
 
-import ignis.ignis.domain.feed.domain.Feed;
 import ignis.ignis.domain.user.controller.dto.request.LoginRequest;
 import ignis.ignis.domain.user.controller.dto.request.SignupRequest;
 import ignis.ignis.domain.user.controller.dto.response.LoginResponse;
@@ -9,12 +8,9 @@ import ignis.ignis.domain.user.domain.User;
 import ignis.ignis.domain.user.domain.repository.UserRepository;
 import ignis.ignis.domain.user.facade.UserFacade;
 import ignis.ignis.global.security.jwt.JwtTokenProvider;
-import ignis.ignis.global.security.jwt.dto.TokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

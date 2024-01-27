@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 public class UserInfoResponse {
     private Long id;
     private String userName;
+    private String email;
     private Integer age;
     private String profileUrl;
     private Integer point;
@@ -23,6 +24,7 @@ public class UserInfoResponse {
     public UserInfoResponse(User user) {
         this.id = user.getId();
         this.userName = user.getUserName();
+        this.email = user.getEmail();
         this.age = user.getAge();
         this.profileUrl = user.getProfileUrl();
         this.point = user.getRe();
