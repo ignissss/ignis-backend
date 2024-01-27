@@ -17,8 +17,5 @@ public interface FeedRepository extends JpaRepository<Feed, Long> {
     List<Feed> findFeedsNearUser(@Param("userLatitude") double userLatitude,
                                  @Param("userLongitude") double userLongitude);
 
-
-    Boolean existsByUserAndFeed(User user, Feed feed);
-
 }
 
