@@ -22,15 +22,15 @@ public class JwtTokenProvider {
     private final AuthDetailsService authDetailsService;
     private static final String ACCESS_KEY = "access_token";
 
-    public TokenResponse getToken(String accountId) {
-        String accessToken = generateToken(accountId, jwtProperties.getAccessExp(),ACCESS_KEY);
+    public TokenResponse getToken(String userName) {
+        String accessToken = generateToken(userName, jwtProperties.getAccessExp(),ACCESS_KEY);
 
         return new TokenResponse(accessToken);
     }
 
-    private String generateToken(String accountId, long expiration, String type) {
+    private String generateToken(String userName, long expiration, String type) {
         return Jwts.builder().signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
-                .setSubject(accountId)
+                .setSubject(userName)
                 .setHeaderParam("typ", type)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
