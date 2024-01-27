@@ -7,4 +7,6 @@ public interface CountRepository extends JpaRepository<Count, Long> {
     Boolean existsByUserAndFeed(User user, Feed feed);
 
     void deleteByUserAndFeed(User user, Feed feed);
+
+    boolean existsByUser(User user);
 }

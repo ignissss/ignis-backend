@@ -47,7 +47,7 @@ public class FeedController {
     }
 
     @Operation(description = "좋아요")
-    @PostMapping("/add/count/{feedId}")
+    @PostMapping("/count/{feedId}")
     public CountResponse addCount(@PathVariable Long feedId) {
         return feedService.addCount(feedId);
     }

@@ -75,7 +75,7 @@ public class FeedService {
     @Transactional
     public CountResponse addCount(Long feedId) {
         User user = userFacade.getCurrentUser();
-        Feed feed = feedRepository.findById(feedId).orElseThrow(()->new NotFoundException("adsf"));
+        Feed feed = feedRepository.findById(feedId).orElseThrow(()->new RuntimeException("asdf"));
         if(countRepository.existsByUserAndFeed(user, feed)) {
             throw new RuntimeException(("adsf"));
         }
@@ -113,7 +113,7 @@ public class FeedService {
     @Transactional(readOnly = true)
     public FindFeedResponse queryFeed(Long feedId) {
         Feed feed = feedRepository.findById(feedId).orElseThrow(() -> new RuntimeException("null"));
-        return new FindFeedResponse(feed);
+        return new FindFeedResponse(feed, countRepository.existsByUser(feed.getUser()));
     }
 
     @Transactional

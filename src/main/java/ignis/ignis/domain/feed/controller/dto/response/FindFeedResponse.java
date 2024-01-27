@@ -18,15 +18,17 @@ public class FindFeedResponse {
     private String user;
     private LocalDateTime createAt;
     private Integer count;
+    private boolean isLiked;
     private List<CommentDto> comments;
 
-    public  FindFeedResponse (Feed feed) {
+    public  FindFeedResponse (Feed feed, boolean isLiked) {
         this.title = feed.getTitle();
         this.id = feed.getId();
         this.imageUrl = feed.getImageUrl();
         this.user = feed.getUser().getUserName();
         this.createAt = feed.getCreateAt();
         this.count = feed.getCount();
+        this.isLiked = isLiked;
         this.comments = feed.getComments().stream().map(
                 comment -> CommentDto.builder()
                         .authorId(comment.getUser().getId())
