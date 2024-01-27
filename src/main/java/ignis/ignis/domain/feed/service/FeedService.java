@@ -120,7 +120,7 @@ public class FeedService {
     @Transactional
     public void deleteFeed(Long feedId) {
         Feed feed = feedRepository.findById(feedId).orElseThrow(()-> new RuntimeException("s"));
-        if (!userFacade.getCurrentUser().getUserName().equals(feed.getUser().getUserName())) {
+        if (!userFacade.getCurrentUser().getEmail().equals(feed.getUser().getEmail())) {
             throw new RuntimeException("asdf");
         }
         feedRepository.delete(feed);
