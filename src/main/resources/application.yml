@@ -6,13 +6,19 @@ spring:
     password: ${PASSWORD}
   jpa:
     hibernate:
+<<<<<<< HEAD
       ddl-auto: update
     properties:
       show_sql: true
+=======
+      ddl-auto: create
+    show-sql: true
+>>>>>>> 3511d025b32161eaa428ef92901e43ece7a6ebd2
 
   jackson:
     property-naming-strategy: SNAKE_CASE
 
+<<<<<<< HEAD
   jwt:
     key: ${JWT_KEY}
     live:
@@ -34,3 +40,8 @@ servlet:
   multipart:
     max-file-size: 10MB
     max-request-size: 10MB
+=======
+  jwt :
+    secretKey : ${JWT_KEY}
+    accessExp : ${ACCESS_TOKEN_TIME}
+>>>>>>> 3511d025b32161eaa428ef92901e43ece7a6ebd2

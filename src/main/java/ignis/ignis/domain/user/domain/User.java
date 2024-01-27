@@ -17,5 +17,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String accountId;
+    private String email;
+
+    private String userName;
+
+    private Integer age;
+
+    private String profileUrl;
 }
